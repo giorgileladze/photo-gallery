@@ -14,6 +14,14 @@ This project is a photo gallery application designed to showcase images in an or
   
 - **axios**: Within the `axios` folder, you'll encounter the Axios instance utilized in the project. This folder contains customized Axios parameters and exports a custom Axios object tailored for use within the project. This setup ensures efficient communication with backend services and facilitates seamless data exchange.
 
+## Caching
+project is caching 2 main data structure:
+- **photos**: this is key - value pair object where each key is **id** of the individual image and value is **image data** itself. 
+- **query**: this is key - value pair object where each key is **query** that we have already searched and the value is **array of ids**. Each cached query contains array of ids which represent image ids.
+
+before each request custom hooks first check storage if there are any previouslly saved results to avoid api request. It also saves image stats when so it only need to send one request for image stats and it will be saved for later use;
+
+
 ## Installation
 
 To run this project locally, follow these steps:
