@@ -23,7 +23,13 @@ body {
     line-height: 1.5;
 }
 
+/* if portal contains any element, than dissable scroll */
+body:has(.portal) {
+    overflow: hidden;
+}
+
 a {
     text-decoration: none;
     color: inherit;
 }
+

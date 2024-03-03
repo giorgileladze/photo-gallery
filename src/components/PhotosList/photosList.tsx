@@ -1,0 +1,76 @@
+import { useState } from 'react';
+import { Photo, PhotoListProps } from './interfaces'
+import './styles.css'
+import { createPortal } from 'react-dom';
+
+const PhotoCard: React.FC<Photo> = (props) => {
+    const [showFull, setShowFull] = useState<boolean>(false);
+    const [loaded, setLoaded] = useState<boolean>(false);
+
+    const {
+        id,
+        alt_description,
+        urls: {
+            small,
+            full
+        },
+        // likes = 0,
+        // downloads = 0,
+        // views = 0,
+    } = props;
+
+    return (
+        <div id={id} className='photo-card'>
+            <div className='small-photo' onClick={() => setShowFull(true)}>
+                <img src={small} alt={alt_description} title={alt_description}/>
+            </div>
+            {showFull && createPortal(
+                <div className={`full-photo portal ${showFull ? 'active' : ''}`}>
+                    <div className={`full-photo-img ${loaded ? 'loaded' : ''}`} style={{backgroundImage: `url(${small}`}}>
+                        <img onLoad={() => setLoaded(true)} src={full} alt={alt_description}/>
+                    </div>                
+                    {/* <StatsCard likes={likes} views={views} downloads={downloads} /> */}
+                    <div className='cover' onClick={() => setShowFull(false)}></div>
+                </div>,
+            document.getElementById('portal')!,
+            id
+            )}
+        </div>
+    )
+}
+
+const PhotosList: React.FC<PhotoListProps> = ({data}) => {
+    
+    // create matrix from data to allow creating better grid of photos
+    const createGridTemplate = ():Photo[][] => {
+        const arr:Photo[][] = [];
+        const columnCount = 4;
+
+        data.forEach((elem, index) => {
+            const i = index % columnCount;
+            if(!arr[i]){
+                arr[i] = new Array<Photo>();
+            }
+
+            arr[i].push(elem);
+        })
+
+        return arr;
+    }
+
+    return (
+        <div className='photos-container'>
+            {createGridTemplate().map((columnElems, index) => {
+                return (
+                    <div key={index} className='gallery-column'>
+                        {columnElems.map(elem => {
+                            return <PhotoCard key={elem.id} {...elem} />
+                        })}
+                    </div>
+                );
+            })}
+        </div>
+    )
+}
+
+export default PhotosList
