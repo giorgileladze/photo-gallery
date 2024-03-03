@@ -11,14 +11,6 @@ header {
     height: 44px;    
 }
 
-/* --Search-- */
-.search input{
-    height: 30px;
-    border: 1px solid var(--secondary-color);
-    border-radius: 15px;
-    padding: 10px;
-}
-
 /* --Menu-- */
 .menu ul {
     list-style: none;
@@ -42,12 +34,6 @@ header {
 @media (min-width: 768px) {
     header {
         padding: 10px 40px;
-    }
-
-    .search input{
-        margin-top: 10px;
-        height: 35px;
-        width: 500px;
     }
 
     .menu li {
