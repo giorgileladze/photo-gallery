@@ -3,7 +3,7 @@ import api from '../../axios';
 import axios, { Canceler } from 'axios';
 import { Photo } from '../../components/PhotosList';
 
-const usePhotosSearch = (query: string | null, pageNumber: number) => {
+const usePhotosSearch = (query: string | null, pageNumber: number, fetchApi:boolean = true) => {
   const [loading, setLoading] = useState(true)
   const [photos, setPhotos] = useState<Photo[]>([])
   const [hasMore, setHasMore] = useState(false)
@@ -114,7 +114,7 @@ const usePhotosSearch = (query: string | null, pageNumber: number) => {
     let cancel: Canceler;
     
     if(query){
-        if(!isCached()){
+        if(!isCached() && fetchApi){
             console.log('fetch ', query, pageNumber)
             api.get(`/search/photos?page=${pageNumber}&query=${query}&per_page=20`, {
                 cancelToken: new axios.CancelToken(c => cancel = c)
@@ -141,7 +141,7 @@ const usePhotosSearch = (query: string | null, pageNumber: number) => {
             setLoading(false);
         }
 
-    } else {
+    } else if(fetchApi){
         api.get<Photo[]>(`/photos?per_page=20&page=${pageNumber}`).then(res => {
           const data = [...parsePhotoData(res.data)];  
           setUniquePhotos(data);
