@@ -21,6 +21,7 @@ body {
     font-family: Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
+    overflow-x: hidden;
 }
 
 /* if portal contains any element, than dissable scroll */

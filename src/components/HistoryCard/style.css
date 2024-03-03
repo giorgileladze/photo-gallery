@@ -1,0 +1,46 @@
+.history-card {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 30px 0 15px 0;
+    padding: 10px;
+    max-width: 95vw;
+    display: flex;
+    overflow-x: auto;
+    background-color: white;
+}
+
+.history-card span{
+    margin: 0 5px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: white;
+    background-color: gray;
+    cursor: pointer;
+}
+
+.history-card span.active {
+    background-color: var(--primary-color);
+}
+
+.history-card span:hover {
+    background-color: var(--primary-color);
+}
+
+@media (min-width: 768px) {
+    .history-card {
+        margin-left: 90px;
+        margin-top: 30px;
+        width: 100vw;
+    }
+    
+    .history-card span{
+        margin: 0 5px;
+        padding: 10px 15px;
+        border-radius: 10px;
+        color: white;
+        background-color: gray;
+        cursor: pointer;
+    }
+}
