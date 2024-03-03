@@ -35,6 +35,10 @@ header {
     header {
         padding: 10px 40px;
     }
+    
+    header div {
+        margin: 0 55px;
+    }
 
     .menu li {
         margin-right: 20px;
