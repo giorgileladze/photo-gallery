@@ -7,7 +7,7 @@ interface PropTypes {
 const Search: React.FC<PropTypes> = ({handleQueryChange}) => {
   return (
     <div className='search'>
-      <input onChange={(e) => handleQueryChange(e)} type='text' placeholder='Search' />
+      <input onChange={(e) => handleQueryChange(e)} type='text' placeholder='ძებნა' />
     </div>
   )
 }

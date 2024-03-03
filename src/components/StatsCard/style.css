@@ -1,0 +1,21 @@
+.stats {
+    position: absolute;
+    z-index: 10000;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 45px;
+    gap: 25px;
+}
+
+.stats span {
+    border-bottom: 1px solid gray;
+
+}
+
+.stats span img {
+    width: 20px;
+    height: 20px;
+    margin: auto;
+}
