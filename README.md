@@ -1,31 +1,25 @@
-# React + TypeScript + Vite
+# Photo Gallery
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+This project is a photo gallery application designed to showcase images in an organized and visually appealing manner. The application is structured into several common folders, each serving a specific purpose:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **pages**: This folder contains all the page files within the project.
+  
+- **hooks**: The `hooks` folder contains custom hooks that are separated from other logics. These hooks handle complex operations such as infinity scrolling, local storage manipulation, and more. They encapsulate reusable logic to enhance modularity and maintainability.
+  
+- **assets**: The `assets` folder houses project-related icons.
+  
+- **components**: In the `components` folder, you'll find general components utilized in the project. These components include headers, pageNotFound displays, stats cards, and more. They are designed to be reusable across different parts of the application, promoting consistency and efficiency in development.
+  
+- **axios**: Within the `axios` folder, you'll encounter the Axios instance utilized in the project. This folder contains customized Axios parameters and exports a custom Axios object tailored for use within the project. This setup ensures efficient communication with backend services and facilitates seamless data exchange.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To run this project locally, follow these steps:
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone the repository to your local machine using the following command:
+2. `npm install` & `npm run dev`
+3. project will start on port 3000
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-# photo-gallery
+# NOTE: include your api token in .env file to use api 
