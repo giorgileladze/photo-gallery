@@ -10,6 +10,11 @@ export interface Photo {
     }
 }
 
+export interface PhotoCardProps {
+    photoData: Photo
+    reference?: (node: HTMLImageElement) => void
+}
 export interface PhotoListProps {
     data: Photo[]
+    reference: (node: HTMLImageElement) => void
 }

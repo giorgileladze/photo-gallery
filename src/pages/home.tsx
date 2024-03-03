@@ -1,49 +1,55 @@
-import { useEffect, useState } from "react"
-import PhotosList, { Photo } from "../components/PhotosList"
-import api from "../axios";
+import { useCallback, useEffect, useRef, useState } from "react"
+import PhotosList from "../components/PhotosList"
+import usePhotosSearch from "../hooks/usePhotosSearch";
+import Search from "../components/Search";
 
 const Home: React.FC = () => {
-  const [data, setData] = useState<Photo[]>([]);
-  const parsePhotoData = (data: Photo[]): Photo[] => {
-    return data.map(elem => {
-      const {
-        id,
-        alt_description,
-        urls: {
-          full,
-          small,
-        },
-        likes,
-        downloads,
-        views,
-      } = elem;
+ const [page, setPage] = useState(1);
+ const [query, setQuery] = useState<string | null>(null);
+ const { 
+    photos,
+    loading,
+    hasMore,
+  } = usePhotosSearch(query, page);
 
-      return {
-        id,
-        alt_description,
-        urls: {
-          full,
-          small,
-        },
-        likes,
-        downloads,
-        views,
+  const observer = useRef<IntersectionObserver | null>(null)
+  const lastBookElementRef = useCallback((node: HTMLImageElement) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prevPageNumber => prevPageNumber + 1)
       }
-    });
+    })
+    if (node) observer.current.observe(node)
+  }, [loading, hasMore])
+
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const val = e.target.value;
+
+    if(!val) {
+      setQuery(null);
+    }
+    setQuery(val);
+    setPage(1);
   }
 
   useEffect(() => {
-    const requestData = async () => {
-      const response = await api.get<Photo[]>(`/photos?per_page=20&page=1`);
+    const set = new Set();
 
-      setData(parsePhotoData(response.data));
+    photos.forEach(el => set.add(el.id));
+
+    if(photos.length > set.size) {
+      console.log(photos)
     }
-
-    requestData();
-  }, [])
+  }, [photos])
 
   return (
-    <PhotosList data={data} />
+    <div>
+      <Search handleQueryChange={handleQueryChange}/>
+      <PhotosList data={photos} reference={lastBookElementRef}/>
+    </div>
   )
 }
 

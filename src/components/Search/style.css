@@ -1,0 +1,25 @@
+.search {
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.search input{
+    min-width: 250px;
+    height: 30px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+@media (min-width: 768px) {
+
+    .search input{
+        margin-top: 10px;
+        height: 35px;
+        width: 500px;
+    }
+
+    .search {
+        margin-left: 100px;
+    }
+}

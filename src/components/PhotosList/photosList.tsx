@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Photo, PhotoListProps } from './interfaces'
+import { Photo, PhotoListProps, PhotoCardProps } from './interfaces'
 import './styles.css'
 import { createPortal } from 'react-dom';
 
-const PhotoCard: React.FC<Photo> = (props) => {
+const PhotoCard: React.FC<PhotoCardProps> = ({photoData, reference}) => {
     const [showFull, setShowFull] = useState<boolean>(false);
     const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -17,12 +17,12 @@ const PhotoCard: React.FC<Photo> = (props) => {
         // likes = 0,
         // downloads = 0,
         // views = 0,
-    } = props;
+    } = photoData;
 
     return (
         <div id={id} className='photo-card'>
             <div className='small-photo' onClick={() => setShowFull(true)}>
-                <img src={small} alt={alt_description} title={alt_description}/>
+                <img src={small} alt={alt_description} title={alt_description} ref={reference ? reference : null}/>
             </div>
             {showFull && createPortal(
                 <div className={`full-photo portal ${showFull ? 'active' : ''}`}>
@@ -39,7 +39,7 @@ const PhotoCard: React.FC<Photo> = (props) => {
     )
 }
 
-const PhotosList: React.FC<PhotoListProps> = ({data}) => {
+const PhotosList: React.FC<PhotoListProps> = ({data, reference}) => {
     
     // create matrix from data to allow creating better grid of photos
     const createGridTemplate = ():Photo[][] => {
@@ -63,8 +63,11 @@ const PhotosList: React.FC<PhotoListProps> = ({data}) => {
             {createGridTemplate().map((columnElems, index) => {
                 return (
                     <div key={index} className='gallery-column'>
-                        {columnElems.map(elem => {
-                            return <PhotoCard key={elem.id} {...elem} />
+                        {columnElems.map((elem, index) => {
+                            if(index < columnElems.length - 1){
+                                return <PhotoCard key={elem.id} photoData={elem}/>
+                            }
+                            return <PhotoCard key={elem.id} photoData={elem} reference={reference}/>
                         })}
                     </div>
                 );
