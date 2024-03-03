@@ -25,7 +25,11 @@ const Home: React.FC = () => {
     if(!val) {
       setQuery(null);
     }
-    setQuery(val);
+    setTimeout(() => {
+      if(e.target.value == val){
+        setQuery(val);
+      }
+    }, 500) // set timeout to avoid api requests if user is still typing the word to search, since there is no search button, give it 500ms delay before search request is sent
     setPage(1);
   }
 

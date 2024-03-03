@@ -19,7 +19,7 @@ const HistoryCard: React.FC<PorpTypes> = ({keys, active, onClick}) => {
     <div className='history-card'>
         {keys.map(el => {
             return (
-                <span className={`${active === el ? 'active' : ''}`} onClick={() => handleClick(el)}>
+                <span key={el} className={`${active === el ? 'active' : ''}`} onClick={() => handleClick(el)}>
                     {el}
                 </span>
             )
