@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PhotosList from "../components/PhotosList";
 import useInfinitySearch from "../hooks/useInfinitySearch";
 import usePhotosSearch from "../hooks/usePhotosSearch";
@@ -23,12 +23,9 @@ const History: React.FC = () => {
 
   const handleClick = (key: string) => {
     setActive(key);
+    setPage(1);
   }
-
-  useEffect(() => {
-    console.log(history)
-  }, [page])
-
+  
   return (
     <div>
       <HistoryCard keys={history} onClick={handleClick} active={active}/>

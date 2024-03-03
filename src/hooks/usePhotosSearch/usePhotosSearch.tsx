@@ -115,7 +115,6 @@ const usePhotosSearch = (query: string | null, pageNumber: number, fetchApi:bool
     
     if(query){
         if(!isCached() && fetchApi){
-            console.log('fetch ', query, pageNumber)
             api.get(`/search/photos?page=${pageNumber}&query=${query}&per_page=20`, {
                 cancelToken: new axios.CancelToken(c => cancel = c)
             }).then(res => {
@@ -125,7 +124,6 @@ const usePhotosSearch = (query: string | null, pageNumber: number, fetchApi:bool
                 updateCache(res.data.results);
             })
         } else {
-            console.log('storage ', query, pageNumber)
             const obj = JSON.parse(localStorage.getItem('query') as string);
             const arr:string[] = obj[query];
 
@@ -139,10 +137,11 @@ const usePhotosSearch = (query: string | null, pageNumber: number, fetchApi:bool
 
             setUniquePhotos(data);
             setLoading(false);
+            setHasMore(true);
         }
 
     } else if(fetchApi){
-        api.get<Photo[]>(`/photos?per_page=20&page=${pageNumber}`).then(res => {
+        api.get<Photo[]>(`/photos?per_page=20&page=${pageNumber}&order_by=popular`).then(res => {
           const data = [...parsePhotoData(res.data)];  
           setUniquePhotos(data);
           setHasMore(true);

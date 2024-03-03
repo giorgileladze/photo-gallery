@@ -1,12 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from 'react';
 import { Photo, PhotoListProps, PhotoCardProps } from './interfaces'
 import './styles.css'
 import { createPortal } from 'react-dom';
+import StatsCard from '../StatsCard';
 
 const PhotoCard: React.FC<PhotoCardProps> = ({photoData, reference}) => {
-    const [showFull, setShowFull] = useState<boolean>(false);
-    const [loaded, setLoaded] = useState<boolean>(false);
-
     const {
         id,
         alt_description,
@@ -14,10 +13,13 @@ const PhotoCard: React.FC<PhotoCardProps> = ({photoData, reference}) => {
             small,
             full
         },
-        // likes = 0,
-        // downloads = 0,
-        // views = 0,
+        likes,
+        downloads,
+        views,
     } = photoData;
+
+    const [showFull, setShowFull] = useState<boolean>(false);
+    const [loaded, setLoaded] = useState<boolean>(false);
 
     return (
         <div id={id} className='photo-card'>
@@ -29,7 +31,13 @@ const PhotoCard: React.FC<PhotoCardProps> = ({photoData, reference}) => {
                     <div className={`full-photo-img ${loaded ? 'loaded' : ''}`} style={{backgroundImage: `url(${small}`}}>
                         <img onLoad={() => setLoaded(true)} src={full} alt={alt_description}/>
                     </div>                
-                    {/* <StatsCard likes={likes} views={views} downloads={downloads} /> */}
+                    <StatsCard stats={
+                        {
+                            likes,
+                            downloads,
+                            views
+                        }
+                    } id={id}/>
                     <div className='cover' onClick={() => setShowFull(false)}></div>
                 </div>,
             document.getElementById('portal')!,
@@ -60,9 +68,9 @@ const PhotosList: React.FC<PhotoListProps> = ({data, reference}) => {
 
     return (
         <div className='photos-container'>
-            {createGridTemplate().map((columnElems, index) => {
+            {createGridTemplate().map((columnElems, i) => {
                 return (
-                    <div key={index} className='gallery-column'>
+                    <div key={i} className='gallery-column'>
                         {columnElems.map((elem, index) => {
                             if(index < columnElems.length - 1){
                                 return <PhotoCard key={elem.id} photoData={elem}/>
